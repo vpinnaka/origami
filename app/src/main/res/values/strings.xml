@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Origami</string>
+    <string name="app_tagline">Your personal AI assistant</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Welcome to Origami</string>
+    <string name="onboarding_welcome_subtitle">A private, on-device AI assistant powered by Gemma 4</string>
+    <string name="onboarding_model_title">Set Up Your AI Model</string>
+    <string name="onboarding_model_subtitle">Origami runs Gemma 4 E2B locally on your device — no data leaves your phone.</string>
+    <string name="onboarding_profile_title">Tell Me About You</string>
+    <string name="onboarding_profile_subtitle">A few quick questions to personalize your assistant</string>
+    <string name="onboarding_skills_title">Choose Your Skills</string>
+    <string name="onboarding_skills_subtitle">Pick what you\'d like your assistant to help with</string>
+    <string name="onboarding_done_title">You\'re All Set!</string>
+    <string name="onboarding_done_subtitle">Your assistant is ready to help</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_get_started">Get Started</string>
+    <string name="btn_skip">Skip</string>
+
+    <!-- Navigation -->
+    <string name="nav_chat">Chat</string>
+    <string name="nav_assistants">Assistants</string>
+    <string name="nav_skills">Skills</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Chat -->
+    <string name="chat_placeholder">Message Origami…</string>
+    <string name="chat_thinking">Thinking…</string>
+    <string name="chat_tool_calling">Using tool: %s</string>
+    <string name="new_chat">New Chat</string>
+
+    <!-- Model setup -->
+    <string name="model_download_title">Download Gemma 4 E2B</string>
+    <string name="model_download_size">Model size: ~2.6 GB</string>
+    <string name="model_download_progress">Downloading… %d%%</string>
+    <string name="model_loading">Loading model…</string>
+    <string name="model_ready">Model ready</string>
+    <string name="model_error">Failed to load model</string>
+    <string name="model_path_hint">Or enter a local .task file path</string>
+
+    <!-- Assistants -->
+    <string name="assistants_title">Assistants</string>
+    <string name="create_assistant">Create Assistant</string>
+    <string name="assistant_name_hint">Assistant name</string>
+    <string name="assistant_prompt_hint">System prompt (personality &amp; instructions)</string>
+    <string name="schedule_daily">Daily</string>
+    <string name="schedule_weekly">Weekly</string>
+    <string name="schedule_manual">Manual only</string>
+
+    <!-- Skills -->
+    <string name="skills_title">Skills</string>
+    <string name="skill_install">Install Skill</string>
+    <string name="skill_from_folder">From Folder</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_model">Model</string>
+    <string name="settings_memory">Memory</string>
+    <string name="settings_search">Web Search</string>
+    <string name="settings_composio">Composio API Key</string>
+    <string name="settings_tavily">Tavily API Key</string>
+    <string name="settings_backend">Inference Backend</string>
+    <string name="settings_backend_cpu">CPU (safer, slower)</string>
+    <string name="settings_backend_gpu">GPU (faster, needs 12GB+ RAM)</string>
+    <string name="settings_clear_memory">Clear All Memories</string>
+    <string name="settings_clear_confirm">This will permanently delete all stored memories. Continue?</string>
+    <string name="settings_about">About</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_agent">Agent Running</string>
+    <string name="notification_channel_scheduler">Scheduled Tasks</string>
+    <string name="notification_agent_title">Origami is working…</string>
+    <string name="notification_agent_text">Running agent task in background</string>
+</resources>
