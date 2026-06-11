@@ -21,8 +21,7 @@ data class ModelSetupUiState(
     val error: String? = null
 )
 
-// Official Gemma 4 E2B .task file download URL (Kaggle/HF mirror)
-const val GEMMA4_E2B_URL = "https://storage.googleapis.com/gemma4/gemma4-e2b-cpu.task"
+const val GEMMA_KAGGLE_URL = "https://www.kaggle.com/models/google/gemma/tfLite/gemma-2-2b-it-cpu-int8"
 
 @HiltViewModel
 class ModelSetupViewModel @Inject constructor(
@@ -71,14 +70,8 @@ class ModelSetupViewModel @Inject constructor(
     }
 
     fun downloadModel() {
-        viewModelScope.launch {
-            modelManager.downloadModel(GEMMA4_E2B_URL) { progress ->
-                _state.update { it.copy(downloadProgress = progress) }
-            }.onSuccess { path ->
-                modelManager.loadModel(path)
-            }.onFailure { e ->
-                _state.update { it.copy(error = "Download failed: ${e.message}") }
-            }
+        _state.update {
+            it.copy(error = "Auto-download is not available. Please download the model from Kaggle (see instructions below) and enter the file path.")
         }
     }
 

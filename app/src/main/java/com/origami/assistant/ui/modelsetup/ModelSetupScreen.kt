@@ -1,5 +1,7 @@
 package com.origami.assistant.ui.modelsetup
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,6 +12,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,6 +27,7 @@ fun ModelSetupScreen(
     viewModel: ModelSetupViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     LaunchedEffect(state.modelState) {
         if (state.modelState is ModelState.Ready) {
@@ -82,7 +87,11 @@ fun ModelSetupScreen(
                 is ModelState.Uninitialized -> {
                     DownloadSection(
                         isDownloaded = state.isModelDownloaded,
-                        onDownload = viewModel::downloadModel,
+                        onOpenKaggle = {
+                            context.startActivity(
+                                Intent(Intent.ACTION_VIEW, Uri.parse(GEMMA_KAGGLE_URL))
+                            )
+                        },
                         onLoadDefault = viewModel::loadDefault
                     )
                 }
@@ -103,7 +112,11 @@ fun ModelSetupScreen(
                     Spacer(Modifier.height(16.dp))
                     DownloadSection(
                         isDownloaded = state.isModelDownloaded,
-                        onDownload = viewModel::downloadModel,
+                        onOpenKaggle = {
+                            context.startActivity(
+                                Intent(Intent.ACTION_VIEW, Uri.parse(GEMMA_KAGGLE_URL))
+                            )
+                        },
                         onLoadDefault = viewModel::loadDefault
                     )
                 }
@@ -149,7 +162,7 @@ fun ModelSetupScreen(
 @Composable
 private fun DownloadSection(
     isDownloaded: Boolean,
-    onDownload: () -> Unit,
+    onOpenKaggle: () -> Unit,
     onLoadDefault: () -> Unit
 ) {
     Column(
@@ -163,18 +176,36 @@ private fun DownloadSection(
                 Text("Load Model")
             }
         } else {
-            Button(onClick = onDownload, modifier = Modifier.fillMaxWidth()) {
-                Icon(Icons.Default.Download, null)
-                Spacer(Modifier.width(8.dp))
-                Text("Download Gemma 4 E2B (~2.6 GB)")
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                ),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        "How to get the model",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        "1. Tap the button below to open Kaggle\n" +
+                        "2. Sign in and accept the Gemma license\n" +
+                        "3. Download the .task file (~2.6 GB)\n" +
+                        "4. Note the file path (e.g. /sdcard/Download/…)\n" +
+                        "5. Enter that path in the field below",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
+                    )
+                }
             }
-            Spacer(Modifier.height(8.dp))
-            Text(
-                "Requires Wi-Fi. The model is stored in app private storage.",
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-            )
+            Spacer(Modifier.height(12.dp))
+            Button(onClick = onOpenKaggle, modifier = Modifier.fillMaxWidth()) {
+                Icon(Icons.Default.OpenInBrowser, null)
+                Spacer(Modifier.width(8.dp))
+                Text("Get Gemma 2B from Kaggle")
+            }
         }
     }
 }
