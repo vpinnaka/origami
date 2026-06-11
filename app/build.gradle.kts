@@ -126,9 +126,8 @@ dependencies {
     // Coroutines
     implementation(libs.coroutines.android)
 
-    // Inference (Gemma 4 / LiteRT-LM)
+    // Inference (Gemma 4 via MediaPipe LLM Inference API / LiteRT)
     implementation(libs.mediapipe.tasks.genai)
-    implementation(libs.litert.lm)
 
     // Image loading
     implementation(libs.coil.compose)
