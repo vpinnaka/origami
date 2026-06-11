@@ -1,5 +1,6 @@
 package com.origami.assistant.ui.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -206,4 +207,4 @@ private fun ApiKeyField(
 
 // Extension to make ListItem clickable without the clickable modifier on content
 private fun Modifier.clickableCompat(onClick: () -> Unit): Modifier =
-    this.then(androidx.compose.foundation.clickable(onClick = onClick))
+    this.clickable(onClick = onClick)

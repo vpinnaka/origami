@@ -29,11 +29,12 @@ class SkillManager @Inject constructor(
     val skillsDir: File = File(context.filesDir, "skills").also { it.mkdirs() }
 
     /** Install a skill from a source folder (copy + register) */
-    suspend fun installFromFolder(sourceFolder: File): Result<SkillEntity> = try {
+    suspend fun installFromFolder(sourceFolder: File): Result<SkillEntity> {
         val manifest = File(sourceFolder, "SKILL.md")
         if (!manifest.exists()) {
             return Result.failure(IllegalArgumentException("No SKILL.md found in ${sourceFolder.name}"))
         }
+        return try {
 
         val manifestContent = manifest.readText()
         val name = parseManifestField(manifestContent, "name") ?: sourceFolder.name
@@ -64,9 +65,10 @@ class SkillManager @Inject constructor(
         assistantRepo.saveSkill(skill)
         Timber.i("Installed skill: $name v$version")
         Result.success(skill)
-    } catch (e: Exception) {
-        Timber.e(e, "Failed to install skill")
-        Result.failure(e)
+        } catch (e: Exception) {
+            Timber.e(e, "Failed to install skill")
+            Result.failure(e)
+        }
     }
 
     /** Install a bundled (built-in) skill from assets */

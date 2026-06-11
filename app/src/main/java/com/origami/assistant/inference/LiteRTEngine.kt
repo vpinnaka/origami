@@ -1,8 +1,7 @@
 package com.origami.assistant.inference
 
-import com.google.mediapipe.tasks.genai.llminference.LlmInference
-import com.google.mediapipe.tasks.genai.llminference.LlmInference.LlmInferenceOptions
 import android.content.Context
+import com.google.mediapipe.tasks.genai.llminference.LlmInference
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -19,10 +18,10 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
 /**
- * LiteRT-LM inference engine wrapping the MediaPipe LLM Inference API.
+ * LiteRT inference engine via the MediaPipe LLM Inference API.
  *
- * Gemma 4 E2B runs at ~2.6 GB. We default to CPU to avoid SIGSEGV on
- * devices with <12 GB RAM when GPU acceleration is requested.
+ * Gemma 4 E2B runs at ~2.6 GB. CPU backend is the safe default.
+ * GPU requires ~3GB VRAM and will SIGSEGV on devices with <12GB RAM.
  */
 @Singleton
 class LiteRTEngine @Inject constructor(
@@ -38,20 +37,17 @@ class LiteRTEngine @Inject constructor(
         withContext(Dispatchers.IO) {
             try {
                 Timber.d("Initializing LiteRT engine: path=$modelPath backend=$backend")
-                val options = LlmInferenceOptions.builder()
+
+                val mediaPipeBackend = when (backend) {
+                    InferenceBackend.GPU -> LlmInference.Backend.GPU
+                    InferenceBackend.CPU -> LlmInference.Backend.CPU
+                }
+
+                val options = LlmInference.LlmInferenceOptions.builder()
                     .setModelPath(modelPath)
                     .setMaxTokens(4096)
-                    .setNumDecode(64)
-                    .setTemperature(0.7f)
-                    .setTopK(40)
-                    .setTopP(0.95f)
-                    .apply {
-                        if (backend == InferenceBackend.GPU) {
-                            setPreferredBackend(LlmInferenceOptions.Backend.GPU)
-                        } else {
-                            setPreferredBackend(LlmInferenceOptions.Backend.CPU)
-                        }
-                    }
+                    .setMaxTopK(40)
+                    .setPreferredBackend(mediaPipeBackend)
                     .build()
 
                 llm?.close()

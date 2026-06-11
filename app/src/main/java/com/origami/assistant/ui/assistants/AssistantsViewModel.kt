@@ -77,7 +77,13 @@ class AssistantsViewModel @Inject constructor(
         val s = _state.value
         if (s.draftName.isBlank()) return
         viewModelScope.launch {
-            val assistant = (s.editingAssistant ?: AssistantEntity(id = UUID.randomUUID().toString())).copy(
+            val base = s.editingAssistant ?: AssistantEntity(
+                id = UUID.randomUUID().toString(),
+                name = "",
+                description = "",
+                systemPrompt = ""
+            )
+            val assistant = base.copy(
                 name = s.draftName,
                 description = s.draftDescription,
                 systemPrompt = s.draftPrompt.ifBlank {

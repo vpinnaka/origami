@@ -14,8 +14,7 @@ okhttp = "4.12.0"
 moshi = "1.15.2"
 coroutines = "1.10.2"
 datastore = "1.1.1"
-mediapipe-genai = "0.10.22"
-litert-lm = "1.0.0"
+mediapipe-genai = "0.10.35"
 accompanist = "0.37.0"
 coil = "2.7.0"
 timber = "5.0.1"
@@ -71,7 +70,6 @@ coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutin
 
 # MediaPipe / LiteRT for Gemma inference
 mediapipe-tasks-genai = { group = "com.google.mediapipe", name = "tasks-genai", version.ref = "mediapipe-genai" }
-litert-lm = { group = "com.google.ai.edge.litert", name = "litert-lm", version.ref = "litert-lm" }
 
 # Image loading
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
